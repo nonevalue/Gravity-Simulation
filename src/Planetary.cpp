@@ -44,14 +44,16 @@ Planetary::Planetary(double mass, float radius, const sf::Vector2f& position, co
 void Planetary::calcGravity(Planetary &planet)
 {
     float delta_x = body.getPosition().x - planet.body.getPosition().x;
-    float delta_y = body.getPosition().y - planet.body.getPosition().y;
+    float delta_y = -(body.getPosition().y - planet.body.getPosition().y);
 
-    float angle = atan2(delta_x, delta_y);
+    float angle = atan2(delta_y, delta_x);
     float hypotenuse = sqrt(pow(delta_x, 2) + pow(delta_y, 2));
     double distance = hypotenuse;
 
     double acceleration = G * planet.c_mass / pow(distance, 2);
-    c_velocity = sf::Vector2f(-acceleration * cos(angle), -acceleration * sin(angle));
+
+    c_velocity.x = c_velocity.x - acceleration * cos(angle);
+    c_velocity.y = c_velocity.y + acceleration * sin(angle);
 }
 
 void Planetary::updatePosition()

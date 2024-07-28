@@ -15,7 +15,13 @@ std::string numberToString(T number)
     return ss.str();
 }
 
-
+template<typename T>
+T stringToNumber(std::string string)
+{
+    T number;
+    std::stringstream(string) >> number;
+    return number;
+}
 
 class Simulation
 {
@@ -24,6 +30,7 @@ public:
 
 private:
     void update();
+    void updateSystems();
     void updateEvent();
     void draw();
 
@@ -34,13 +41,16 @@ private:
 
     EntityManager entity_manager;
 
-    float zoom;
-
     sf::Font font;
+    
+    float zoom;
     sf::Text zoom_text;
     sf::Text coordinate_text;
 
+    int console_timer;
     std::string entered_text;
     sf::Text console_text;
-    int console_timer;
+
+    int simulation_speed;
+    sf::Text speed_text;
 };

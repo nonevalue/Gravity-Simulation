@@ -2,6 +2,6 @@
 
 int main()
 {
-    Simulation Simulation;    
+    Simulation Simulation;
     return 0;
 }
