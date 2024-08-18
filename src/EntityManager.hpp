@@ -12,7 +12,7 @@ public:
     void addPlanetary(double mass, float radius, const sf::Vector2f& position, const sf::Vector2f& velocity);
     void addPlanetary(double mass, float radius, const sf::Vector2f& position, const sf::Color& color);
     void addPlanetary(double mass, float radius, const sf::Vector2f& position, const sf::Vector2f& velocity, const sf::Color& color);
-
+    
     void update();
     void draw(sf::RenderWindow* window);
     

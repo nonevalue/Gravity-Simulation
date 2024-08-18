@@ -28,12 +28,31 @@ Simulation::Simulation()
     speed_text.setPosition(0, 60);
     speed_text.setString("simulation speed: " + std::to_string(simulation_speed));
 
-    entity_manager.addPlanetary(5.972e24, 6.371e6, sf::Vector2f(0.f, 0.f), sf::Color::Blue);
-    entity_manager.addPlanetary(7.347e22, 1.737e6, sf::Vector2f(0, 3.844e8), sf::Vector2f(1022, 0), sf::Color::White);
-
-    entity_manager.addPlanetary(5.972e3, 6.371e4, sf::Vector2f(4.1e7, 0.f), sf::Color::Red);
+    importPlanets();
 
     update();
+}
+
+void Simulation::importPlanets()
+{
+    std::ifstream file_input("planets.txt");
+    std::string line;
+    float mass, radius, position_x, position_y, velocity_x, velocity_y, color_r, color_g, color_b;
+
+    if (file_input.is_open())
+    {
+        while (std::getline(file_input, line))
+        {
+            std::istringstream iss(line);
+            
+            iss >> mass >> radius >> position_x >> position_y >> velocity_x >> velocity_y >> color_r >> color_g >> color_b;
+
+            entity_manager.addPlanetary(mass, radius, sf::Vector2f(position_x, position_y), sf::Vector2f(velocity_x, velocity_y), sf::Color(color_r, color_g, color_b));
+        }
+        file_input.close();
+    }
+    else
+        std::cout << "Unable to open file\n";
 }
 
 void Simulation::update()
@@ -152,7 +171,7 @@ void Simulation::commandCheck()
     else if (entered_text.substr(0,3) == "/s " && entered_text.size() > 3)
     {
         int new_speed = stringToNumber<int>(entered_text.substr(3));
-        if (new_speed > 0)
+        if (new_speed >= 0)
         {
             simulation_speed = new_speed;
             speed_text.setString("simulation speed: " + std::to_string(simulation_speed));

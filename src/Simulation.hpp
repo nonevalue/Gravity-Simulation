@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <sstream>
 #include <SFML/Graphics.hpp>
 
@@ -29,6 +30,7 @@ public:
     Simulation();
 
 private:
+    void importPlanets();
     void update();
     void updateSystems();
     void updateEvent();

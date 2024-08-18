@@ -23,6 +23,7 @@ void EntityManager::addPlanetary(double mass, float radius, const sf::Vector2f &
 
 void EntityManager::update()
 {
+    std::cout << "Gravity:\n";
     for (unsigned int i = 0; i < planetaries.size(); i++)
     {
         for (unsigned int j = 0; j < planetaries.size(); j++)
@@ -30,13 +31,18 @@ void EntityManager::update()
             if (i == j)
                 continue;
 
-            planetaries[i]->calcGravity(*planetaries[j]);    
+            if (i == 0)
+                std::cout << "Earth: " ;
+            else if (i == 1)
+                std::cout << "Moon: ";
+
+            planetaries[i]->calcGravity(*planetaries[j]);
         }
     }
-
+    std::cout << "----------\n";
     for (unsigned int i = 0; i < planetaries.size(); i++)
     {
-        planetaries[i]->updatePosition();
+        planetaries[i]->updatePosition(planetaries);
     }
 }
 
